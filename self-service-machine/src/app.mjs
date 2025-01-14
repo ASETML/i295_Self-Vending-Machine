@@ -3,11 +3,12 @@ import express from "express";
 const app = express();
 const port = 3000;
 
+//Route pour /
 app.get("/", (req, res) => {
   res.send("API REST of self service machine !");
 });
 
-//Redirige vers la page d'accueil
+//Route pour /api/
 app.get("/api/", (req, res) => {
   res.redirect(`http://localhost:${port}/`);
 });
