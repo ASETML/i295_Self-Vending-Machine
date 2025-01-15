@@ -1,6 +1,12 @@
 import express from "express";
-import { products } from "../db/mock-product.mjs";
-import { success, getUniqueId } from "./helper.mjs";
+import {
+  products,
+  getProduct,
+  removeProduct,
+  updateProduct,
+  getUniqueId,
+} from "../db/mock-product.mjs";
+import { success } from "./helper.mjs";
 
 const productsRouter = express();
 
@@ -18,6 +24,7 @@ productsRouter.get("/:id", (req, res) => {
   res.json(success(message, product));
 });
 
+//Création d'un produit
 productsRouter.post("/", (req, res) => {
   // Création d'un nouvel id du produit
   // Dans les prochains versions, c'est MySQL qui gérera cela pour nous (identifiant auto_increment)
@@ -32,6 +39,20 @@ productsRouter.post("/", (req, res) => {
   const message = `Le produit ${createdProduct.name} a bien été créé !`;
 
   res.json(success(message, createdProduct));
+});
+
+//Suppression d'un produit
+productsRouter.delete("/:id", (req, res) => {
+  const productId = req.params.id;
+
+  let deletedProduct = getProduct(productId);
+
+  removeProduct(productId);
+
+  // Définir un message pour le consommateur de l'API REST
+  const message = `Le produit ${deletedProduct.name} a bien été supprimé !`;
+
+  res.json(success(message, deletedProduct));
 });
 
 export { productsRouter };
