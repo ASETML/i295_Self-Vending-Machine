@@ -12,8 +12,30 @@ const animals = [
 // Solution utilisant le paradigme procédurale
 // A VOUS DE COMPLETER ICI
 
+/*const searchAnimal = () => {
+  for (let animal of animals) {
+    if (animal.threat === 5) {
+      return animal;
+    }
+  }
+}*/
+
 // Solution utilisant le paradigme fonctionnel
 // A VOUS DE COMPLETER ICI
+
+/*const searchAnimal = () => {
+  let dangerAnimal;
+  animals.forEach((animal) => {
+    if (animal.threat === 5) {
+      dangerAnimal = animal;
+    }
+  });
+  return dangerAnimal;
+}*/
+
+const searchAnimal = () => {
+  return animals.find((animal) => animal.threat === 5);
+};
 
 console.log(searchAnimal());
 
