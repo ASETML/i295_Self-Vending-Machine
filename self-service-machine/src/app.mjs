@@ -1,6 +1,10 @@
 import express from "express";
 
 const app = express();
+
+//On utilise un middleware
+app.use(express.json()); //Transforme les requêtes en objets js
+
 const port = 3000;
 
 //Route pour /
