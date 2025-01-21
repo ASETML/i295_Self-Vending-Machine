@@ -1,0 +1,2 @@
+-- Créer la bd <db_book> si elle n'existe pas, avec UTF8 comme character set par défaut, et avec les règles de collation utf8_general_ci
+-- (remplacer ce commentaire par la commande SQL adéquate)

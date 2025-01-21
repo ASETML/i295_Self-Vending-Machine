@@ -1,0 +1,2 @@
+-- Afficher toutes les bases de données connues du serveur
+-- (remplacer ce commentaire par la commande SQL adéquate)

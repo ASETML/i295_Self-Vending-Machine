@@ -1,0 +1,2 @@
+-- Connecter la session à la bd <db_book>
+-- (remplacer ce commentaire par la commande SQL adéquate)

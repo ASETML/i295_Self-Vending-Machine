@@ -1,0 +1,2 @@
+-- Afficher l'état du serveur (status)
+-- (remplacer ce commentaire par la commande SQL adéquate)
