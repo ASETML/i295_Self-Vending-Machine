@@ -7,7 +7,7 @@ app.use(express.json()); //Transforme les requêtes en objets js
 
 const port = 3000;
 
-//Route pour /
+//Route pour la racine
 app.get("/", (req, res) => {
   res.send("API REST of self service machine !");
 });
