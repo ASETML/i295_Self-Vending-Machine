@@ -63,49 +63,51 @@ productsRouter.post("/", (req, res) => {
 productsRouter.delete("/:id", (req, res) => {
   //Promesses chainées
   //Recherche par id
-  Product.findByPk(req.params.id).then((deletedProduct) => {
-    //Suppression du produit
-    Product.destroy({
-      where: { id: deletedProduct.id },
-    }).then((_) => {
-      // Définir un message pour le consommateur de l'API REST
-      const message = `Le produit ${deletedProduct.name} a bien été supprimé !`;
-      // Retourner la réponse HTTP en json avec le msg et le produit créé
-      res.json(success(message, deletedProduct));
+  Product.findByPk(req.params.id)
+    .then((deletedProduct) => {
+      if (deletedProduct === null) {
+        const message =
+          "Le produit demandé n'existe pas. Merci de réessayer avec un autre identifiant.";
+        // A noter ici le return pour interrompre l'exécution du code
+        return res.status(404).json({ message });
+      }
+      //Suppression du produit
+      return Product.destroy({
+        where: { id: deletedProduct.id },
+      }).then((_) => {
+        // Définir un message pour le consommateur de l'API REST
+        const message = `Le produit ${deletedProduct.name} a bien été supprimé !`;
+        // Retourner la réponse HTTP en json avec le msg et le produit créé
+        res.json(success(message, deletedProduct));
+      });
+    })
+    .catch((error) => {
+      const message =
+        "Le produit n'a pas pu être supprimé. Merci de réessayer dans quelques instants.";
+      res.status(500).json({ message, data: error });
     });
-  });
 });
 
 //Modification d'un produit
 productsRouter.put("/:id", (req, res) => {
   const productId = req.params.id;
-  //Mise a jour d'un produit
   Product.update(req.body, { where: { id: productId } })
     .then((_) => {
-      //Récupération du produit mis à jour pour l'afficher
-      Product.findByPk(productId)
-        .then((updatedProduct) => {
-          //Produit n'existe pas
-          if (updatedProduct === null) {
-            const message =
-              "Le produit demandé n'existe pas. Merci de réessayer avec un autre identifiant.";
-            // A noter ici le return pour interrompre l'exécution du code
-            return res.status(404).json({ message });
-          }
-          //Produit existe
-          // Définir un message pour l'utilisateur de l'API REST
-          const message = `Le produit ${updatedProduct.name} dont l'id vaut ${updatedProduct.id} a été mis à jour avec succès`;
-          // Retourner la réponse HTTP en json avec le msg et le produit créé
-          res.json(success(message, updatedProduct));
-        })
-        //FindByPk
-        .catch((error) => {
+      return Product.findByPk(productId).then((updatedProduct) => {
+        //Produit existe pas
+        if (updatedProduct === null) {
           const message =
-            "Le produit n'a pas pu être mis à jour. Merci de réessayer dans quelques instants.";
-          res.status(500).json({ message, data: error });
-        });
+            "Le produit demandé n'existe pas. Merci de réessayer avec un autre identifiant.";
+          // A noter ici le return pour interrompre l'exécution du code
+          return res.status(404).json({ message });
+        }
+        //Produit existe
+        // Définir un message pour l'utilisateur de l'API REST
+        const message = `Le produit ${updatedProduct.name} dont l'id vaut ${updatedProduct.id} a été mis à jour avec succès`;
+        // Retourner la réponse HTTP en json avec le msg et le produit créé
+        res.json(success(message, updatedProduct));
+      });
     })
-    //Update
     .catch((error) => {
       const message =
         "Le produit n'a pas pu être mis à jour. Merci de réessayer dans quelques instants.";
