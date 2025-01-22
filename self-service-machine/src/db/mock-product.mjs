@@ -18,3 +18,5 @@ let products = [
     created: new Date(),
   },
 ];
+
+export { products };

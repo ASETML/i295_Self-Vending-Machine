@@ -31,6 +31,13 @@ import { productsRouter } from "./routes/products.mjs";
 //Les routes qui commencent par /api/products sont dans products.mjs
 app.use("/api/products", productsRouter); //On utilise les routes de products.mjs. La racine des routes de products.mjs sera /api/products
 
+//Middleware
+app.use(({ res }) => {
+  const message =
+    "Impossible de trouver la ressource demandée ! Vous pouvez essayer une autre URL.";
+  res.status(404).json(message);
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
