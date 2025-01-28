@@ -1,13 +1,33 @@
 import express from "express";
 import { Product } from "../db/sequelize.mjs";
-import { ValidationError } from "sequelize";
+import { ValidationError, Op, where } from "sequelize";
 import { success } from "./helper.mjs";
+import { products } from "../db/mock-product.mjs";
 
 const productsRouter = express();
 
 //On crée une route
 productsRouter.get("/", (req, res) => {
-  Product.findAll()
+  if (req.query.name) {
+    if (req.query.name.length < 2) {
+      const message = `Le terme de la recherche doit contenir au moins 2 caractères`;
+      return res.status(400).json({ message });
+    }
+    let limit = 3;
+    if (req.query.limit) {
+      limit = parseInt(req.query.limit);
+    }
+    return Product.findAndCountAll({
+      where: { name: { [Op.like]: `%${req.query.name}%` } },
+      order: ["name"],
+      limit: limit,
+    }).then((products) => {
+      const message = `Il y a ${products.count} produits qui correspondent au terme de la recherche`;
+      res.json(success(message, products));
+    });
+  }
+
+  Product.findAll({ order: ["name"] })
     .then((products) => {
       const message = "La liste des produits a bien été récupérée.";
       res.json(success(message, products));
