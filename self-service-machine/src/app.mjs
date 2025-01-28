@@ -31,6 +31,9 @@ import { productsRouter } from "./routes/products.mjs";
 //Les routes qui commencent par /api/products sont dans products.mjs
 app.use("/api/products", productsRouter); //On utilise les routes de products.mjs. La racine des routes de products.mjs sera /api/products
 
+import { loginRouter } from "./routes/login.mjs";
+app.use("/api/login", loginRouter);
+
 //Middleware
 app.use(({ res }) => {
   const message =

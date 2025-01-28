@@ -2,12 +2,12 @@ import express from "express";
 import { Product } from "../db/sequelize.mjs";
 import { ValidationError, Op, where } from "sequelize";
 import { success } from "./helper.mjs";
-import { products } from "../db/mock-product.mjs";
+import { auth } from "../auth/auth.mjs";
 
 const productsRouter = express();
 
 //On crée une route
-productsRouter.get("/", (req, res) => {
+productsRouter.get("/", auth, (req, res) => {
   if (req.query.name) {
     if (req.query.name.length < 2) {
       const message = `Le terme de la recherche doit contenir au moins 2 caractères`;
@@ -41,7 +41,7 @@ productsRouter.get("/", (req, res) => {
 });
 
 //Récupération d'un produit
-productsRouter.get("/:id", (req, res) => {
+productsRouter.get("/:id", auth, (req, res) => {
   //Recherche par id
   Product.findByPk(req.params.id)
     .then((product) => {
@@ -64,7 +64,7 @@ productsRouter.get("/:id", (req, res) => {
 });
 
 //Création d'un produit
-productsRouter.post("/", (req, res) => {
+productsRouter.post("/", auth, (req, res) => {
   //Crée un produit
   Product.create(req.body)
     .then((createdProduct) => {
@@ -84,7 +84,7 @@ productsRouter.post("/", (req, res) => {
 });
 
 //Suppression d'un produit
-productsRouter.delete("/:id", (req, res) => {
+productsRouter.delete("/:id", auth, (req, res) => {
   //Promesses chainées
   //Recherche par id
   Product.findByPk(req.params.id)
@@ -113,7 +113,7 @@ productsRouter.delete("/:id", (req, res) => {
 });
 
 //Modification d'un produit
-productsRouter.put("/:id", (req, res) => {
+productsRouter.put("/:id", auth, (req, res) => {
   const productId = req.params.id;
   Product.update(req.body, { where: { id: productId } })
     .then((_) => {
