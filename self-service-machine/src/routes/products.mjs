@@ -7,6 +7,40 @@ import { auth } from "../auth/auth.mjs";
 const productsRouter = express();
 
 //On crée une route
+
+/**
+ * @swagger
+ * /api/products/:
+ *  get:
+ *    tags: [Products]
+ *    security:
+ *      - bearerAuth: []
+ *    summary: Retrieve all products.
+ *    description: Retrieve all products. Can be used to populate a select HTML tag.
+ *    responses:
+ *      200:
+ *        description: All products.
+ *        content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              data:
+ *                type: object
+ *                properties:
+ *                  id:
+ *                    type: integer
+ *                    description: The product ID.
+ *                    example: 1
+ *                  name:
+ *                    type: string
+ *                    description: The product's name.
+ *                    example: Big Mac
+ *                  price:
+ *                    type: number
+ *                    description: The product's price.
+ *                    example: 5.99
+ */
 productsRouter.get("/", auth, (req, res) => {
   if (req.query.name) {
     if (req.query.name.length < 2) {
@@ -41,6 +75,47 @@ productsRouter.get("/", auth, (req, res) => {
 });
 
 //Récupération d'un produit
+
+/**
+ * @swagger
+ * /api/products/{id}:
+ *  get:
+ *    tags: [Products]
+ *    security:
+ *      - bearerAuth: []
+ *    summary: Retrieve the product with the given id.
+ *    description: Retrieve the product with the given id.
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: integer
+ *        required: true
+ *        description: Id of the product to get.
+ *    responses:
+ *      200:
+ *        description: The product with the given id.
+ *        content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              data:
+ *                type: object
+ *                properties:
+ *                  id:
+ *                    type: integer
+ *                    description: The product ID.
+ *                    example: 1
+ *                  name:
+ *                    type: string
+ *                    description: The product's name.
+ *                    example: Big Mac
+ *                  price:
+ *                    type: number
+ *                    description: The product's price.
+ *                    example: 5.99
+ */
 productsRouter.get("/:id", auth, (req, res) => {
   //Recherche par id
   Product.findByPk(req.params.id)
@@ -64,6 +139,40 @@ productsRouter.get("/:id", auth, (req, res) => {
 });
 
 //Création d'un produit
+
+/**
+ * @swagger
+ * /api/products/:
+ *  post:
+ *    tags: [Products]
+ *    security:
+ *      - bearerAuth: []
+ *    summary: Create a product.
+ *    description: Create a product.
+ *    responses:
+ *      200:
+ *        description: Product created.
+ *        content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              data:
+ *                type: object
+ *                properties:
+ *                  id:
+ *                    type: integer
+ *                    description: The product ID.
+ *                    example: 1
+ *                  name:
+ *                    type: string
+ *                    description: The product's name.
+ *                    example: Big Mac
+ *                  price:
+ *                    type: number
+ *                    description: The product's price.
+ *                    example: 5.99
+ */
 productsRouter.post("/", auth, (req, res) => {
   //Crée un produit
   Product.create(req.body)
@@ -84,6 +193,47 @@ productsRouter.post("/", auth, (req, res) => {
 });
 
 //Suppression d'un produit
+
+/**
+ * @swagger
+ * /api/products/{id}:
+ *  delete:
+ *    tags: [Products]
+ *    security:
+ *      - bearerAuth: []
+ *    summary: Delete a product.
+ *    description: Delete a product.
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: integer
+ *        required: true
+ *        description: Id of the product to delete.
+ *    responses:
+ *      200:
+ *        description: Product deleted.
+ *        content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              data:
+ *                type: object
+ *                properties:
+ *                  id:
+ *                    type: integer
+ *                    description: The product ID.
+ *                    example: 1
+ *                  name:
+ *                    type: string
+ *                    description: The product's name.
+ *                    example: Big Mac
+ *                  price:
+ *                    type: number
+ *                    description: The product's price.
+ *                    example: 5.99
+ */
 productsRouter.delete("/:id", auth, (req, res) => {
   //Promesses chainées
   //Recherche par id
@@ -113,6 +263,47 @@ productsRouter.delete("/:id", auth, (req, res) => {
 });
 
 //Modification d'un produit
+
+/**
+ * @swagger
+ * /api/products/{id}:
+ *  put:
+ *    tags: [Products]
+ *    security:
+ *      - bearerAuth: []
+ *    summary: Update a product.
+ *    description: Update a product.
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: integer
+ *        required: true
+ *        description: Id of the product to update.
+ *    responses:
+ *      200:
+ *        description: Product updated.
+ *        content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              data:
+ *                type: object
+ *                properties:
+ *                  id:
+ *                    type: integer
+ *                    description: The product ID.
+ *                    example: 1
+ *                  name:
+ *                    type: string
+ *                    description: The product's name.
+ *                    example: Big Mac
+ *                  price:
+ *                    type: number
+ *                    description: The product's price.
+ *                    example: 5.99
+ */
 productsRouter.put("/:id", auth, (req, res) => {
   const productId = req.params.id;
   Product.update(req.body, { where: { id: productId } })

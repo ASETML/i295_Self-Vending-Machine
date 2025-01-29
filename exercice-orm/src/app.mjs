@@ -119,7 +119,6 @@ import { sequelize, initDb, Product } from "./db/sequelize.mjs";
     console.log("-- Requete 9 --");
     const cheapestProduct = await Product.findOne({
       order: [["price", "ASC"]],
-      limit: 1,
     });
     console.log(cheapestProduct.toJSON());
 

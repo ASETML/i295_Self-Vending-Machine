@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { privateKey } from "./private_key.mjs";
 
+//Middleware d'authentification
 const auth = (req, res, next) => {
   const authorizationHeader = req.headers.authorization; //Le jeton qui se trouve dans le header
 
@@ -29,7 +30,7 @@ const auth = (req, res, next) => {
           const message = "L'identifiant de l'utilisateur est invalide";
           return res.status(401).json({ message });
         } else {
-          next(); //On continue. La fonction fléchée de la route
+          next(); //La requête continue sa route.
         }
       }
     );

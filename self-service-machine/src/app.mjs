@@ -1,4 +1,5 @@
 import express from "express";
+import swaggerUi from "swagger-ui-express";
 
 const app = express();
 
@@ -6,6 +7,17 @@ const app = express();
 app.use(express.json()); //Transforme les requêtes en objets js
 
 const port = 3000;
+
+import { swaggerSpec } from "./swagger.mjs";
+
+//Route pour accéder à la documentation Swagger
+//const specs = swaggerJsdoc(options);
+
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, { explorer: true })
+);
 
 //Connection à la DB
 import { sequelize, initDb } from "./db/sequelize.mjs";

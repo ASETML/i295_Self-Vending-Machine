@@ -1,0 +1,20 @@
+{
+  "name": "teacher-name",
+  "version": "1.0.0",
+  "description": "Application pour gérer le surnom des enseignants",
+  "main": "src/app.mjs",
+  "scripts": {
+    "start": "nodemon src/app.mjs"
+  },
+  "author": "Alban Segalen",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "sequelize": "^6.37.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
