@@ -1,0 +1,12 @@
++------------+---------------------------+------------------------------------------------------+-------------------------------------+
+| Verbe HTTP |            URI            |                         JSON                         |             Description             |
++------------+---------------------------+------------------------------------------------------+-------------------------------------+
+| GET        | /api/teachers             | NON                                                  | Récupérer la liste des enseignants  |
+| POST       | /api/login                | {"username": "etml", "password": "etml"}             | Obtenir un token JWT                |
+| GET        | /api/teachers/:id         | NON                                                  | Récupérer un enseignant             |
+| POST       | /api/teachers/            | {firstname, lastname, gender, origin, fksection}     | Ajout d'un enseignants              |
+| PUT        | /api/teachers/:id         | {firstname, lastname, gender, origin, fksection}     | Modification d'un enseignant        |
+| DELETE     | /api/teachers/:id         | NON                                                  | Supression d'un enseignant          |
+| GET        | /api/sections             | NON                                                  | Récupérer la liste des sections     |
+| GET        | /api/sections/:id         | NON                                                  | Récupérer une section               |
++------------+---------------------------+------------------------------------------------------+-------------------------------------+
