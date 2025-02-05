@@ -1,5 +1,5 @@
 import express from "express";
-import { sequelize } from "./db/sequelize.mjs";
+import { sequelize, initDb } from "./db/sequelize.mjs";
 
 const app = express();
 const port = 3001;
@@ -7,6 +7,7 @@ const port = 3001;
 app.use(express.json());
 
 sequelize.authenticate().then((_) => {
+  initDb();
   console.log("DB connectée");
 });
 

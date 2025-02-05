@@ -3,18 +3,20 @@ let teachers = [
     id: 1,
     firstName: "Bertrand",
     lastName: "Sahli",
-    surName: "BSI",
+    surname: "BSI",
     gender: "m",
     origin: "ETML",
     fk_section: 1,
   },
   {
-    id: 1,
-    firstName: "Bertrand",
-    lastName: "Sahli",
-    surName: "BSI",
-    gender: "m",
+    id: 2,
+    firstName: "Aurélie",
+    lastName: "Curchod",
+    surname: "ACD",
+    gender: "w",
     origin: "ETML",
     fk_section: 1,
   },
 ];
+
+export { teachers };

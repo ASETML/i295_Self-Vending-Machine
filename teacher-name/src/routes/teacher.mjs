@@ -1,4 +1,7 @@
 import express from "express";
+import { Section, Teacher } from "../db/sequelize.mjs";
+import { ValidationError, Op } from "sequelize";
+import { Product } from "../../../self-service-machine/src/db/sequelize.mjs";
 
 const teacherRouter = express();
 
@@ -9,8 +12,20 @@ teacherRouter.get("/", (req, res) => {
 
 //Récupération des détails d'un enseignant
 teacherRouter.get("/:id", (req, res) => {
-  const message = "L'enseignant à bien été récupéré";
-  res.json({ message: message });
+  Teacher.findByPk(req.params.id)
+    .then((teacher) => {
+      if (teacher === null) {
+        const message = "Mauvais ID";
+        res.status(404).json({ message: message });
+      }
+      console.log(teacher);
+      const message = "L'enseignant à bien été récupéré";
+      res.json({ message: message, data: teacher });
+    })
+    .catch((error) => {
+      const message = "😭";
+      res.status(500).json({ message, data: error });
+    });
 });
 
 //Ajout d'un enseignant
